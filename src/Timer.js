@@ -1,13 +1,32 @@
 import React, { Component } from 'react';
 import helpers from './helpers';
+import TimerActionButton from './TimerActionButton';
 
 class Timer extends Component {
+  componentDidMount() {
+    this.forceUpdateInterval = setInterval(() => this.forceUpdate(), 50);
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.forceUpdateInterval);
+  };
+
+  handleStartClick = () => {
+    this.props.onStartClick(this.props.id);
+  };
+
+  handleStopClick = () => {
+    this.props.onStopClick(this.props.id);
+  };
+
   handleTrashClick = () => {
     this.props.onTrashClick(this.props.id);
   };
 
   render() {
-    const elapsedString = helpers.renderElapsedString(this.props.elapsed);
+    const elapsedString = helpers.renderElapsedString(
+      this.props.elapsed, this.props.runningSince
+    );
     return (
       <div className='ui centered card'>
         <div className='content'>
@@ -27,19 +46,21 @@ class Timer extends Component {
               className='right floated edit icon'
               onClick={this.props.onEditClick}
             >
-              <i className='edit icon'></i>
+              <i>Edit</i>
             </span>
             <span
               className='right floated trash icon'
               onClick={this.handleTrashClick}
             >
-              <i className='trash icon'></i>
+              <i>Delete </i>
             </span>
           </div>
-          <div className='ui bottom attached blue basic icon'>
-            Start
-          </div>
         </div>
+        <TimerActionButton
+          timerIsRunning={!!this.props.runningSince}
+          onStartClick={this.handleStartClick}
+          onStopClick={this.handleStopClick}
+          />
       </div>
     );
   }
