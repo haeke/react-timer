@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-## Timer -
+## Timer - live version of the app - https://haeke.github.io/react-timer/
 
 - Project overview and component structure is below:
 -  TimersDashboard (green) - Parent Container
